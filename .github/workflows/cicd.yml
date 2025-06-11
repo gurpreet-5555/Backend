@@ -37,7 +37,7 @@ jobs:
             exit 1
           fi
       - name: Pull image from docker hub
-        run: sudo docker pull backend:latest
+        run: sudo docker pull gsingh23/backend:latest
       - name: Delete existing container
         run: |
           if [ "$(sudo docker ps -aq -f name=demo)" ]; then
