@@ -20,7 +20,7 @@ jobs:
       - name: Login to docker hub
         run: docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
       - name: Build docker image
-        run: docker build -t backend.
+        run: docker build -t backend .
       - name: Push docker image
         run: docker push backend:latest
 
