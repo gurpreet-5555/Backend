@@ -1,6 +1,5 @@
 package com.colab.backend.controller;
 
-import com.colab.backend.model.Comment;
 import com.colab.backend.model.Post;
 import com.colab.backend.service.CommentService;
 import com.colab.backend.service.PostService;
@@ -13,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @RestController
@@ -45,8 +41,8 @@ public class Controller {
                     .put("content", post.getContent())
                     .put("author", post.getAuthor().getUsername())
                     .put("createdAt", simpleDateFormat.format(post.getCreated_at()))
-                    .put("commentCount", post.getComments().stream().count())
-                    .put("userPreview", new ArrayList<>()));
+                    .put("commentCount", post.getComments()!=null?post.getComments().stream().count():0)
+                    .put("userPreview", new int[]{}));
         });
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
@@ -71,4 +67,7 @@ public class Controller {
         return new ResponseEntity<String>(response.toString(), HttpStatus.OK);
     }
 
+    public Controller(PostService postService){
+        this.postService = postService;
+    }
 }
