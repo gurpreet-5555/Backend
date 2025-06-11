@@ -36,6 +36,8 @@ jobs:
             echo "Error: Docker is not installed." >&2
             exit 1
           fi
+      - name: Dockerhub login
+        run: sudo docker login docker.io -u gsingh23 -p Chrome@23
       - name: Pull image from docker hub
         run: sudo docker pull gsingh23/backend:latest
       - name: Delete existing container
