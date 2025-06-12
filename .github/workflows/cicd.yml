@@ -60,6 +60,9 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Wait 30 seconds for deployment
+        run: sleep 30s
+        shell: bash
       - uses: actions/checkout@v4
       - name: Install Postman CLI
         run: |
