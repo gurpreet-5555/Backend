@@ -34,19 +34,6 @@ jobs:
       - name: Push docker image
         run: docker push gsingh23/backend:latest
 
-  automated-api-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Install Postman CLI
-        run: |
-          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      - name: Run API tests
-        run: |
-          postman collection run "45813127-f3cb316d-dafc-47e4-9f0e-435de9cc7ba4"
-
   deploy:
     needs: build
     runs-on: [self-hosted]
@@ -68,3 +55,17 @@ jobs:
           fi
       - name: Run docker container
         run: sudo docker run -d -p 5000:5000 --name demo gsingh23/backend
+
+  automated-api-tests:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "45813127-f3cb316d-dafc-47e4-9f0e-435de9cc7ba4"
