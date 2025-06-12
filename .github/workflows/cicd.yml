@@ -38,20 +38,20 @@ jobs:
     needs: build
     runs-on: [self-hosted]
     steps:
-#      - name: Check Docker Installation
-#        run: |
-#          if ! [ -x "$(command -v docker)" ]; then
-#            echo "Error: Docker is not installed." >&2
-#            exit 1
-#          fi
+      - name: Check Docker Installation
+        run: |
+          if ! [ -x "$(command -v docker)" ]; then
+            echo "Error: Docker is not installed." >&2
+            exit 1
+          fi
       - name: Dockerhub login
-        run: docker login docker.io -u gsingh23 -p Chrome@23
+        run: sudo docker login docker.io -u gsingh23 -p Chrome@23
       - name: Pull image from docker hub
-        run: docker pull gsingh23/backend:latest
-#      - name: Delete existing container
-#        run: |
-#          if [ "$(sudo docker ps -aq -f name=demo)" ]; then
-#            sudo docker rm -f demo
-#          fi
+        run: sudo docker pull gsingh23/backend:latest
+      - name: Delete existing container
+        run: |
+          if [ "$(sudo docker ps -aq -f name=demo)" ]; then
+            sudo docker rm -f demo
+          fi
       - name: Run docker container
-        run: docker run -d -p 5000:5000 --name demo gsingh23/backend
+        run: sudo docker run -d -p 5000:5000 --name demo gsingh23/backend
